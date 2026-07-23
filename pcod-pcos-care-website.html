@@ -1,0 +1,975 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Poo · PCOD/PCOS Care</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;1,9..144,500&family=Inter:wght@400;500;600;700&family=Noto+Serif+Tamil:wght@500;700&family=Noto+Sans+Tamil:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --teal-deep:#123A38;
+    --teal:#1F5C57;
+    --teal-soft:#2E7A73;
+    --cream:#FBF7F1;
+    --sage:#E7F0EB;
+    --coral:#E85D75;
+    --coral-deep:#C93F5B;
+    --marigold:#E8935B;
+    --ink:#16241F;
+    --ink-soft:#4B5D57;
+    --line:#D9E3DD;
+    --white:#FFFFFF;
+    --radius:18px;
+    --shadow:0 12px 32px rgba(18,58,56,0.10);
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    background:var(--cream);
+    color:var(--ink);
+    font-family:'Inter','Noto Sans Tamil',sans-serif;
+    -webkit-font-smoothing:antialiased;
+  }
+  body.lang-ta{font-family:'Noto Sans Tamil','Inter',sans-serif;}
+  .display{font-family:'Fraunces','Noto Serif Tamil',serif; font-weight:600;}
+  body.lang-ta .display{font-family:'Noto Serif Tamil','Fraunces',serif; font-weight:700;}
+  h1,h2,h3{margin:0;}
+  p{margin:0;}
+  img,svg{display:block;max-width:100%;}
+  button{font-family:inherit;cursor:pointer;}
+  .hidden{display:none !important;}
+  .container{max-width:1160px;margin:0 auto;padding:0 28px;}
+
+  /* ============ LANGUAGE OVERLAY ============ */
+  #lang-overlay{
+    position:fixed;inset:0;z-index:999;
+    background:radial-gradient(circle at 20% 20%, #1F5C57 0%, #123A38 55%, #0C2726 100%);
+    display:flex;align-items:center;justify-content:center;
+    color:var(--white);
+  }
+  .petal-field{position:absolute;inset:0;overflow:hidden;opacity:0.16;pointer-events:none;}
+  .petal-field svg{position:absolute;animation:spin 90s linear infinite;}
+  @keyframes spin{from{transform:rotate(0deg);}to{transform:rotate(360deg);}}
+  .lang-card{
+    position:relative;text-align:center;padding:56px 44px;
+    animation:riseIn 0.9s cubic-bezier(.2,.8,.2,1);
+  }
+  @keyframes riseIn{from{opacity:0;transform:translateY(18px);}to{opacity:1;transform:translateY(0);}}
+  .lang-mark{width:56px;height:56px;margin:0 auto 22px;}
+  .lang-card .eyebrow{
+    letter-spacing:0.18em;text-transform:uppercase;font-size:12px;color:#B9D8D2;margin-bottom:14px;
+  }
+  .lang-card h1{font-size:clamp(28px,4vw,42px);line-height:1.15;margin-bottom:10px;}
+  .lang-card .sub{color:#CFE3DF;font-size:15px;margin-bottom:38px;}
+  .lang-options{display:flex;gap:18px;justify-content:center;flex-wrap:wrap;}
+  .lang-btn{
+    display:flex;align-items:center;gap:12px;
+    background:rgba(255,255,255,0.06);
+    border:1px solid rgba(255,255,255,0.25);
+    color:var(--white);padding:18px 30px;border-radius:14px;
+    font-size:19px;transition:all .25s ease;min-width:220px;justify-content:center;
+  }
+  .lang-btn .flag{font-size:22px;}
+  .lang-btn:hover{background:var(--coral);border-color:var(--coral);transform:translateY(-3px);}
+
+  /* ============ HEADER ============ */
+  header{
+    position:sticky;top:0;z-index:50;background:rgba(251,247,241,0.92);
+    backdrop-filter:blur(8px);border-bottom:1px solid var(--line);
+  }
+  .nav-row{display:flex;align-items:center;justify-content:space-between;padding:16px 0;}
+  .brand{display:flex;align-items:center;gap:10px;}
+  .brand svg{width:30px;height:30px;}
+  .brand span{font-size:20px;font-weight:700;color:var(--teal-deep);}
+  nav ul{list-style:none;display:flex;gap:30px;margin:0;padding:0;}
+  nav a{color:var(--ink-soft);text-decoration:none;font-size:14.5px;font-weight:500;}
+  nav a:hover{color:var(--teal-deep);}
+  .nav-right{display:flex;align-items:center;gap:14px;}
+  .lang-switch{
+    display:flex;border:1px solid var(--line);border-radius:999px;overflow:hidden;background:var(--white);
+  }
+  .lang-switch button{border:none;background:transparent;padding:7px 14px;font-size:13px;font-weight:600;color:var(--ink-soft);}
+  .lang-switch button.active{background:var(--teal-deep);color:var(--white);}
+  .btn{border:none;border-radius:999px;padding:11px 22px;font-weight:600;font-size:14.5px;transition:all .2s ease;}
+  .btn-primary{background:var(--coral);color:var(--white);}
+  .btn-primary:hover{background:var(--coral-deep);}
+  .btn-ghost{background:transparent;border:1px solid var(--teal-deep);color:var(--teal-deep);}
+  .btn-ghost:hover{background:var(--teal-deep);color:var(--white);}
+  @media (max-width:860px){ nav ul{display:none;} }
+
+  /* ============ HERO ============ */
+  .hero{position:relative;padding:76px 0 60px;overflow:hidden;}
+  .hero-mandala{position:absolute;right:-120px;top:-80px;width:460px;opacity:0.14;}
+  .hero-grid{display:grid;grid-template-columns:1.1fr 0.9fr;gap:50px;align-items:center;position:relative;}
+  .eyebrow-pill{
+    display:inline-flex;align-items:center;gap:8px;background:var(--sage);color:var(--teal-deep);
+    padding:6px 14px;border-radius:999px;font-size:12.5px;font-weight:600;margin-bottom:20px;
+  }
+  .eyebrow-pill::before{content:'';width:7px;height:7px;border-radius:50%;background:var(--coral);}
+  .hero h1{font-size:clamp(32px,4.6vw,52px);line-height:1.08;color:var(--teal-deep);margin-bottom:18px;}
+  .hero h1 em{color:var(--coral);font-style:normal;}
+  .hero p.lede{font-size:17px;color:var(--ink-soft);max-width:480px;margin-bottom:30px;line-height:1.6;}
+  .hero-ctas{display:flex;gap:14px;flex-wrap:wrap;}
+  .hero-stats{display:flex;gap:30px;margin-top:40px;}
+  .hero-stats div strong{display:block;font-size:24px;color:var(--teal-deep);font-family:'Fraunces',serif;}
+  .hero-stats div span{font-size:12.5px;color:var(--ink-soft);}
+  .hero-card{
+    background:var(--white);border-radius:24px;padding:30px;box-shadow:var(--shadow);border:1px solid var(--line);
+  }
+  .hero-card .row{display:flex;justify-content:space-between;align-items:center;padding:12px 0;border-bottom:1px dashed var(--line);}
+  .hero-card .row:last-child{border-bottom:none;}
+  .hero-card .row span.tag{background:var(--sage);color:var(--teal-deep);font-size:12px;font-weight:700;padding:4px 10px;border-radius:999px;}
+  @media (max-width:900px){ .hero-grid{grid-template-columns:1fr;} .hero-card{order:-1;} }
+
+  /* ============ SECTION HEADINGS ============ */
+  .section{padding:64px 0;}
+  .section-head{max-width:640px;margin:0 auto 40px;text-align:center;}
+  .section-head .eyebrow{color:var(--coral);font-weight:700;font-size:12.5px;letter-spacing:0.1em;text-transform:uppercase;margin-bottom:10px;}
+  .section-head h2{font-size:clamp(26px,3.4vw,36px);color:var(--teal-deep);}
+  .section-head p{color:var(--ink-soft);margin-top:12px;font-size:15.5px;}
+  .section-alt{background:var(--sage);}
+
+  /* ============ ASSESSMENT ============ */
+  .path-cards{display:grid;grid-template-columns:1fr 1fr;gap:22px;max-width:760px;margin:0 auto;}
+  .path-card{
+    background:var(--white);border:2px solid var(--line);border-radius:20px;padding:28px;text-align:left;
+    transition:all .2s ease;
+  }
+  .path-card:hover{border-color:var(--coral);transform:translateY(-3px);box-shadow:var(--shadow);}
+  .path-card .icon{width:42px;height:42px;margin-bottom:14px;}
+  .path-card h3{font-size:19px;color:var(--teal-deep);margin-bottom:6px;}
+  .path-card p{font-size:13.5px;color:var(--ink-soft);}
+  @media (max-width:640px){ .path-cards{grid-template-columns:1fr;} }
+
+  .assess-wrap{max-width:720px;margin:0 auto;background:var(--white);border-radius:24px;box-shadow:var(--shadow);border:1px solid var(--line);padding:36px;}
+  .step-track{display:flex;align-items:center;gap:6px;margin-bottom:30px;}
+  .step-dot{flex:1;height:5px;border-radius:4px;background:var(--line);}
+  .step-dot.done{background:var(--teal-soft);}
+  .step-dot.current{background:var(--coral);}
+  .field-label{display:block;font-size:13.5px;font-weight:600;color:var(--teal-deep);margin-bottom:7px;}
+  .field-row{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:18px;}
+  input[type=text],input[type=number],textarea{
+    width:100%;border:1.5px solid var(--line);border-radius:12px;padding:12px 14px;font-size:14.5px;
+    font-family:inherit;color:var(--ink);background:var(--cream);
+  }
+  input:focus,textarea:focus{outline:2px solid var(--teal-soft);outline-offset:1px;border-color:var(--teal-soft);}
+  textarea{resize:vertical;min-height:90px;}
+  .symptom-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:8px;}
+  @media (max-width:600px){ .symptom-grid{grid-template-columns:1fr;} .field-row{grid-template-columns:1fr;} }
+  .symptom-chip{
+    display:flex;align-items:center;gap:10px;border:1.5px solid var(--line);border-radius:12px;padding:11px 13px;
+    font-size:13.5px;background:var(--cream);
+  }
+  .symptom-chip input{width:17px;height:17px;accent-color:var(--coral);flex-shrink:0;}
+  .symptom-chip.checked{border-color:var(--coral);background:#FDEEF1;}
+  .step-actions{display:flex;justify-content:space-between;margin-top:26px;}
+  .step-title{font-size:20px;color:var(--teal-deep);margin-bottom:4px;}
+  .step-desc{font-size:13.5px;color:var(--ink-soft);margin-bottom:22px;}
+
+  .loader-box{text-align:center;padding:50px 20px;}
+  .spinner{width:52px;height:52px;border-radius:50%;border:4px solid var(--sage);border-top-color:var(--coral);
+    animation:spin2 0.9s linear infinite;margin:0 auto 20px;}
+  @keyframes spin2{to{transform:rotate(360deg);}}
+
+  /* ============ REPORT ============ */
+  .report-grid{display:grid;grid-template-columns:0.85fr 1.15fr;gap:26px;}
+  @media (max-width:860px){ .report-grid{grid-template-columns:1fr;} }
+  .gauge-card{background:var(--white);border-radius:22px;border:1px solid var(--line);box-shadow:var(--shadow);padding:30px;text-align:center;}
+  .gauge-wrap{position:relative;width:200px;height:200px;margin:0 auto 18px;}
+  .gauge-score{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;}
+  .gauge-score strong{font-size:40px;color:var(--teal-deep);font-family:'Fraunces',serif;}
+  .gauge-score span{font-size:12px;color:var(--ink-soft);}
+  .risk-badge{display:inline-block;padding:7px 18px;border-radius:999px;font-weight:700;font-size:13px;margin-top:8px;}
+  .risk-low{background:#E3F3EA;color:#1E7A46;}
+  .risk-moderate{background:#FCEFD9;color:#9C6417;}
+  .risk-high{background:#FBE3E4;color:#B23A3F;}
+  .card{background:var(--white);border-radius:20px;border:1px solid var(--line);box-shadow:var(--shadow);padding:26px;margin-bottom:20px;}
+  .card h3{color:var(--teal-deep);font-size:17px;margin-bottom:14px;display:flex;align-items:center;gap:10px;}
+  .card h3 svg{width:20px;height:20px;}
+  .insight-item{display:flex;gap:10px;padding:9px 0;border-bottom:1px solid var(--line);font-size:14px;color:var(--ink-soft);}
+  .insight-item:last-child{border-bottom:none;}
+  .insight-item::before{content:'';width:6px;height:6px;border-radius:50%;background:var(--coral);margin-top:7px;flex-shrink:0;}
+  .plan-row{display:grid;grid-template-columns:110px 1fr;gap:14px;padding:10px 0;border-bottom:1px dashed var(--line);font-size:14px;}
+  .plan-row:last-child{border-bottom:none;}
+  .plan-row .meal{font-weight:700;color:var(--teal-deep);}
+  .disclaimer{background:var(--sage);border-radius:16px;padding:16px 20px;font-size:12.5px;color:var(--ink-soft);line-height:1.6;margin-top:6px;}
+
+  /* ============ DOCTORS ============ */
+  .filter-row{display:flex;gap:10px;justify-content:center;margin-bottom:30px;flex-wrap:wrap;}
+  .filter-btn{border:1.5px solid var(--line);background:var(--white);border-radius:999px;padding:9px 18px;font-size:13.5px;font-weight:600;color:var(--ink-soft);}
+  .filter-btn.active{background:var(--teal-deep);color:var(--white);border-color:var(--teal-deep);}
+  .doctor-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;}
+  @media (max-width:900px){ .doctor-grid{grid-template-columns:1fr 1fr;} }
+  @media (max-width:640px){ .doctor-grid{grid-template-columns:1fr;} }
+  .doctor-card{background:var(--white);border-radius:20px;border:1px solid var(--line);padding:22px;box-shadow:var(--shadow);}
+  .doc-top{display:flex;gap:14px;align-items:center;margin-bottom:14px;}
+  .doc-avatar{width:56px;height:56px;border-radius:50%;background:linear-gradient(135deg,var(--teal-soft),var(--teal-deep));display:flex;align-items:center;justify-content:center;color:var(--white);font-weight:700;font-size:18px;flex-shrink:0;}
+  .doc-top h4{font-size:16px;color:var(--teal-deep);}
+  .doc-top p{font-size:12.5px;color:var(--ink-soft);}
+  .doc-badges{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:14px;}
+  .badge{font-size:11px;font-weight:700;padding:4px 9px;border-radius:999px;background:var(--sage);color:var(--teal-deep);}
+  .doc-meta{font-size:12.5px;color:var(--ink-soft);margin-bottom:16px;display:flex;justify-content:space-between;}
+  .doc-meta strong{color:var(--ink);}
+
+  /* ============ MODAL ============ */
+  .modal-backdrop{position:fixed;inset:0;background:rgba(18,58,56,0.5);z-index:200;display:flex;align-items:center;justify-content:center;padding:20px;}
+  .modal{background:var(--white);border-radius:22px;max-width:460px;width:100%;padding:32px;max-height:88vh;overflow-y:auto;}
+  .modal-close{float:right;background:var(--sage);border:none;width:30px;height:30px;border-radius:50%;font-size:16px;color:var(--teal-deep);}
+  .modal h3{color:var(--teal-deep);margin-bottom:6px;font-size:20px;}
+  .modal .sub{font-size:13px;color:var(--ink-soft);margin-bottom:22px;}
+  .pay-mock{border:1.5px dashed var(--coral);background:#FDEEF1;border-radius:14px;padding:14px;font-size:12.5px;color:var(--coral-deep);margin-top:16px;line-height:1.6;}
+  .confirm-icon{width:60px;height:60px;margin:0 auto 16px;}
+
+  /* ============ FAQ / FOOTER ============ */
+  .faq-item{border-bottom:1px solid var(--line);padding:16px 0;max-width:720px;margin:0 auto;}
+  .faq-q{display:flex;justify-content:space-between;align-items:center;font-weight:600;color:var(--teal-deep);font-size:15px;background:none;border:none;width:100%;text-align:left;padding:0;}
+  .faq-a{font-size:13.5px;color:var(--ink-soft);margin-top:10px;line-height:1.6;max-width:640px;}
+  footer{background:var(--teal-deep);color:#CFE3DF;padding:44px 0 24px;margin-top:20px;}
+  .foot-row{display:flex;justify-content:space-between;flex-wrap:wrap;gap:20px;padding-bottom:24px;border-bottom:1px solid rgba(255,255,255,0.15);}
+  .foot-brand{color:var(--white);font-size:18px;font-weight:700;}
+  .foot-bottom{padding-top:20px;font-size:12px;text-align:center;color:#8FB3AC;}
+  .toast{
+    position:fixed;bottom:24px;left:50%;transform:translateX(-50%);background:var(--teal-deep);color:var(--white);
+    padding:13px 22px;border-radius:999px;font-size:13.5px;font-weight:600;z-index:300;box-shadow:var(--shadow);
+    animation:toastIn .3s ease;
+  }
+  @keyframes toastIn{from{opacity:0;transform:translate(-50%,10px);}to{opacity:1;transform:translate(-50%,0);}}
+</style>
+</head>
+<body>
+
+<!-- ============ LANGUAGE OVERLAY ============ -->
+<div id="lang-overlay">
+  <div class="petal-field">
+    <svg width="720" height="720" viewBox="0 0 200 200" style="left:-160px;top:-160px;">
+      <g fill="none" stroke="#ffffff" stroke-width="0.6">
+        <path d="M100,100 C100,40 140,20 100,10 C60,20 100,40 100,100 Z" transform="rotate(0 100 100)"/>
+        <path d="M100,100 C100,40 140,20 100,10 C60,20 100,40 100,100 Z" transform="rotate(60 100 100)"/>
+        <path d="M100,100 C100,40 140,20 100,10 C60,20 100,40 100,100 Z" transform="rotate(120 100 100)"/>
+        <path d="M100,100 C100,40 140,20 100,10 C60,20 100,40 100,100 Z" transform="rotate(180 100 100)"/>
+        <path d="M100,100 C100,40 140,20 100,10 C60,20 100,40 100,100 Z" transform="rotate(240 100 100)"/>
+        <path d="M100,100 C100,40 140,20 100,10 C60,20 100,40 100,100 Z" transform="rotate(300 100 100)"/>
+      </g>
+    </svg>
+  </div>
+  <div class="lang-card">
+    <svg class="lang-mark" viewBox="0 0 48 48" fill="none">
+      <circle cx="24" cy="24" r="23" stroke="#E85D75" stroke-width="1.5"/>
+      <path d="M24 12c0 6-5 8-5 14s2.5 10 5 10 5-4 5-10-5-8-5-14z" fill="#E85D75"/>
+    </svg>
+    <div class="eyebrow">Women's Wellness Platform</div>
+    <h1 id="lang-overlay-title">Choose Your Preferred Language<br>உங்கள் மொழியைத் தேர்ந்தெடுக்கவும்</h1>
+    <p class="sub">A calm, private space to understand your PCOD / PCOS risk — in the language you think in.</p>
+    <div class="lang-options">
+      <button class="lang-btn" data-lang="ta"><span class="flag">🇮🇳</span> தமிழ்</button>
+      <button class="lang-btn" data-lang="en"><span class="flag">🇬🇧</span> English</button>
+    </div>
+  </div>
+</div>
+
+<!-- ============ HEADER ============ -->
+<header>
+  <div class="container nav-row">
+    <div class="brand">
+      <svg viewBox="0 0 48 48" fill="none"><circle cx="24" cy="24" r="23" stroke="#123A38" stroke-width="1.5"/><path d="M24 12c0 6-5 8-5 14s2.5 10 5 10 5-4 5-10-5-8-5-14z" fill="#E85D75"/></svg>
+      <span>Poo Care</span>
+    </div>
+    <nav>
+      <ul>
+        <li><a href="#assess" data-t="nav.assess">Assessment</a></li>
+        <li><a href="#doctors" data-t="nav.doctors">Doctors</a></li>
+        <li><a href="#tips" data-t="nav.tips">Health Tips</a></li>
+        <li><a href="#faq" data-t="nav.faq">FAQ</a></li>
+      </ul>
+    </nav>
+    <div class="nav-right">
+      <div class="lang-switch">
+        <button data-lang="en" id="switch-en">EN</button>
+        <button data-lang="ta" id="switch-ta">தமிழ்</button>
+      </div>
+      <button class="btn btn-primary" data-t="nav.cta" onclick="scrollToId('assess')">Start Assessment</button>
+    </div>
+  </div>
+</header>
+
+<!-- ============ HERO ============ -->
+<section class="hero">
+  <svg class="hero-mandala" viewBox="0 0 200 200" fill="none">
+    <g stroke="#1F5C57" stroke-width="0.7">
+      <path d="M100,100 C100,40 140,20 100,10 C60,20 100,40 100,100 Z" transform="rotate(0 100 100)"/>
+      <path d="M100,100 C100,40 140,20 100,10 C60,20 100,40 100,100 Z" transform="rotate(60 100 100)"/>
+      <path d="M100,100 C100,40 140,20 100,10 C60,20 100,40 100,100 Z" transform="rotate(120 100 100)"/>
+      <path d="M100,100 C100,40 140,20 100,10 C60,20 100,40 100,100 Z" transform="rotate(180 100 100)"/>
+      <path d="M100,100 C100,40 140,20 100,10 C60,20 100,40 100,100 Z" transform="rotate(240 100 100)"/>
+      <path d="M100,100 C100,40 140,20 100,10 C60,20 100,40 100,100 Z" transform="rotate(300 100 100)"/>
+    </g>
+  </svg>
+  <div class="container hero-grid">
+    <div>
+      <div class="eyebrow-pill" data-t="hero.eyebrow">Private · Bilingual · Doctor-backed</div>
+      <h1 class="display" data-t="hero.title">Understand your <em>PCOD / PCOS</em> risk, in your own language</h1>
+      <p class="lede" data-t="hero.lede">Answer a short set of questions about your cycle, skin and lifestyle. Get an easy-to-read risk report, a diet and exercise plan, and doctors who speak your language — all in Tamil or English.</p>
+      <div class="hero-ctas">
+        <button class="btn btn-primary" data-t="hero.ctaPrimary" onclick="scrollToId('assess')">Start Free Assessment</button>
+        <button class="btn btn-ghost" data-t="hero.ctaSecondary" onclick="scrollToId('doctors')">Find a Doctor</button>
+      </div>
+      <div class="hero-stats">
+        <div><strong>20+</strong><span data-t="hero.stat1">Symptoms tracked</span></div>
+        <div><strong>2</strong><span data-t="hero.stat2">Languages, fully</span></div>
+        <div><strong>3 min</strong><span data-t="hero.stat3">To complete</span></div>
+      </div>
+    </div>
+    <div class="hero-card">
+      <div class="row"><span data-t="hero.card.symptoms">Symptom check</span><span class="tag" data-t="hero.card.done">Done</span></div>
+      <div class="row"><span data-t="hero.card.report">AI risk report</span><span class="tag" data-t="hero.card.instant">Instant</span></div>
+      <div class="row"><span data-t="hero.card.diet">Diet & exercise plan</span><span class="tag" data-t="hero.card.included">Included</span></div>
+      <div class="row"><span data-t="hero.card.doctor">Doctor consultation</span><span class="tag" data-t="hero.card.optional">Optional</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ ASSESSMENT ============ -->
+<section class="section" id="assess">
+  <div class="container">
+    <div class="section-head">
+      <div class="eyebrow" data-t="assess.eyebrow">Step one</div>
+      <h2 data-t="assess.title">What would you like to assess?</h2>
+      <p data-t="assess.sub">Choose one, and we'll walk you through a short, private questionnaire.</p>
+    </div>
+
+    <div id="path-select" class="path-cards">
+      <button class="path-card" onclick="choosePath('PCOD')">
+        <svg class="icon" viewBox="0 0 48 48" fill="none"><circle cx="24" cy="24" r="20" stroke="#1F5C57" stroke-width="2"/><path d="M24 15v18M15 24h18" stroke="#E85D75" stroke-width="2"/></svg>
+        <h3 data-t="assess.pcodTitle">PCOD Risk Assessment</h3>
+        <p data-t="assess.pcodDesc">Polycystic Ovarian Disease — cycle, weight and lifestyle related symptoms.</p>
+      </button>
+      <button class="path-card" onclick="choosePath('PCOS')">
+        <svg class="icon" viewBox="0 0 48 48" fill="none"><circle cx="24" cy="24" r="20" stroke="#1F5C57" stroke-width="2"/><path d="M16 24a8 8 0 1 1 16 0" stroke="#E85D75" stroke-width="2"/></svg>
+        <h3 data-t="assess.pcosTitle">PCOS Risk Assessment</h3>
+        <p data-t="assess.pcosDesc">Polycystic Ovary Syndrome — hormonal, skin and fertility related symptoms.</p>
+      </button>
+    </div>
+
+    <!-- FORM -->
+    <div id="assess-form" class="assess-wrap hidden">
+      <div class="step-track">
+        <div class="step-dot" id="dot-1"></div>
+        <div class="step-dot" id="dot-2"></div>
+        <div class="step-dot" id="dot-3"></div>
+      </div>
+
+      <!-- Step 1: basic info -->
+      <div id="form-step-1">
+        <div class="step-title" data-t="form.step1.title">Basic Information</div>
+        <div class="step-desc" data-t="form.step1.desc">This helps us personalise your risk report.</div>
+        <label class="field-label" data-t="form.name">Name</label>
+        <input type="text" id="f-name" style="margin-bottom:18px;">
+        <div class="field-row">
+          <div>
+            <label class="field-label" data-t="form.age">Age</label>
+            <input type="number" id="f-age">
+          </div>
+          <div>
+            <label class="field-label" data-t="form.height">Height (cm)</label>
+            <input type="number" id="f-height">
+          </div>
+        </div>
+        <div class="field-row">
+          <div>
+            <label class="field-label" data-t="form.weight">Weight (kg)</label>
+            <input type="number" id="f-weight">
+          </div>
+        </div>
+        <div class="step-actions">
+          <span></span>
+          <button class="btn btn-primary" data-t="form.next" onclick="goStep(2)">Next</button>
+        </div>
+      </div>
+
+      <!-- Step 2: symptoms -->
+      <div id="form-step-2" class="hidden">
+        <div class="step-title" data-t="form.step2.title">Symptom Checklist</div>
+        <div class="step-desc" data-t="form.step2.desc">Select everything that applies to you over the last 3–6 months.</div>
+        <div class="symptom-grid" id="symptom-grid"></div>
+        <div class="step-actions">
+          <button class="btn btn-ghost" data-t="form.back" onclick="goStep(1)">Back</button>
+          <button class="btn btn-primary" data-t="form.next" onclick="goStep(3)">Next</button>
+        </div>
+      </div>
+
+      <!-- Step 3: additional info -->
+      <div id="form-step-3" class="hidden">
+        <div class="step-title" data-t="form.step3.title">Additional Information</div>
+        <div class="step-desc" data-t="form.step3.desc">Anything else you'd like the doctor or report to know? (optional)</div>
+        <textarea id="f-notes" data-t-placeholder="form.notesPlaceholder" placeholder="E.g. family history, current medication, recent changes..."></textarea>
+        <div class="step-actions">
+          <button class="btn btn-ghost" data-t="form.back" onclick="goStep(2)">Back</button>
+          <button class="btn btn-primary" data-t="form.submit" onclick="submitAssessment()">Generate My Report</button>
+        </div>
+      </div>
+
+      <!-- Loading -->
+      <div id="form-loading" class="hidden loader-box">
+        <div class="spinner"></div>
+        <p data-t="form.loading">Analysing your responses...</p>
+      </div>
+    </div>
+
+    <!-- REPORT -->
+    <div id="report-wrap" class="hidden" style="margin-top:34px;">
+      <div class="section-head">
+        <div class="eyebrow" data-t="report.eyebrow">Your report</div>
+        <h2 id="report-heading" data-t="report.title">Your Risk Report</h2>
+      </div>
+      <div class="report-grid">
+        <div>
+          <div class="gauge-card">
+            <div class="gauge-wrap">
+              <svg viewBox="0 0 120 120" width="200" height="200">
+                <circle cx="60" cy="60" r="52" stroke="#E7F0EB" stroke-width="12" fill="none"/>
+                <circle id="gauge-arc" cx="60" cy="60" r="52" stroke="#E85D75" stroke-width="12" fill="none" stroke-linecap="round" transform="rotate(-90 60 60)"/>
+              </svg>
+              <div class="gauge-score">
+                <strong id="gauge-number">--</strong>
+                <span data-t="report.riskScore">Risk Score</span>
+              </div>
+            </div>
+            <div id="risk-badge" class="risk-badge risk-low">--</div>
+          </div>
+          <div class="card">
+            <h3 data-t="report.doctorRecTitle">Recommended Consultation</h3>
+            <p id="doctor-rec-text" style="font-size:13.5px;color:var(--ink-soft);line-height:1.6;"></p>
+            <button class="btn btn-primary" style="margin-top:14px;width:100%;" data-t="report.consultBtn" onclick="scrollToId('doctors')">Consult a Doctor</button>
+          </div>
+        </div>
+        <div>
+          <div class="card">
+            <h3 data-t="report.insightsTitle">Health Insights</h3>
+            <div id="insights-list"></div>
+          </div>
+          <div class="card">
+            <h3 data-t="report.dietTitle">Diet Plan</h3>
+            <div id="diet-list"></div>
+          </div>
+          <div class="card">
+            <h3 data-t="report.exerciseTitle">Exercise Plan</h3>
+            <div id="exercise-list"></div>
+          </div>
+          <div class="card">
+            <h3 data-t="report.lifestyleTitle">Lifestyle Guidance</h3>
+            <div id="lifestyle-list"></div>
+          </div>
+          <div class="disclaimer" data-t="report.disclaimer">This report is an educational self-screening tool, not a medical diagnosis. Please consult a certified doctor for confirmation and treatment.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ DOCTORS ============ -->
+<section class="section section-alt" id="doctors">
+  <div class="container">
+    <div class="section-head">
+      <div class="eyebrow" data-t="doctors.eyebrow">Consult</div>
+      <h2 data-t="doctors.title">Doctor Consultation</h2>
+      <p data-t="doctors.sub">Filter by the language you're most comfortable speaking in.</p>
+    </div>
+    <div class="filter-row" id="doctor-filters"></div>
+    <div class="doctor-grid" id="doctor-grid"></div>
+  </div>
+</section>
+
+<!-- ============ HEALTH TIPS ============ -->
+<section class="section" id="tips">
+  <div class="container">
+    <div class="section-head">
+      <div class="eyebrow" data-t="tips.eyebrow">Everyday care</div>
+      <h2 data-t="tips.title">Health Tips</h2>
+    </div>
+    <div id="tips-grid" class="doctor-grid"></div>
+  </div>
+</section>
+
+<!-- ============ FAQ ============ -->
+<section class="section section-alt" id="faq">
+  <div class="container">
+    <div class="section-head">
+      <div class="eyebrow" data-t="faq.eyebrow">Good to know</div>
+      <h2 data-t="faq.title">Frequently Asked Questions</h2>
+    </div>
+    <div id="faq-list"></div>
+  </div>
+</section>
+
+<footer>
+  <div class="container">
+    <div class="foot-row">
+      <div>
+        <div class="foot-brand">Poo Care</div>
+        <p style="font-size:13px;margin-top:8px;max-width:320px;" data-t="footer.tagline">A bilingual wellness space for PCOD/PCOS awareness, built with Tamil Nadu women in mind.</p>
+      </div>
+      <div style="font-size:13px;line-height:2;" data-t="footer.disclaimerShort">Educational tool only. Not a substitute for professional medical advice.</div>
+    </div>
+    <div class="foot-bottom" data-t="footer.copyright">© 2026 Poo Care. All rights reserved.</div>
+  </div>
+</footer>
+
+<div id="modal-root"></div>
+
+<script>
+/* ============================================================
+   TRANSLATIONS
+   ============================================================ */
+const t = {
+en: {
+  "nav.assess":"Assessment","nav.doctors":"Doctors","nav.tips":"Health Tips","nav.faq":"FAQ","nav.cta":"Start Assessment",
+  "hero.eyebrow":"Private · Bilingual · Doctor-backed",
+  "hero.title":"Understand your <em>PCOD / PCOS</em> risk, in your own language",
+  "hero.lede":"Answer a short set of questions about your cycle, skin and lifestyle. Get an easy-to-read risk report, a diet and exercise plan, and doctors who speak your language — all in Tamil or English.",
+  "hero.ctaPrimary":"Start Free Assessment","hero.ctaSecondary":"Find a Doctor",
+  "hero.stat1":"Symptoms tracked","hero.stat2":"Languages, fully","hero.stat3":"To complete",
+  "hero.card.symptoms":"Symptom check","hero.card.done":"Done","hero.card.report":"AI risk report","hero.card.instant":"Instant",
+  "hero.card.diet":"Diet & exercise plan","hero.card.included":"Included","hero.card.doctor":"Doctor consultation","hero.card.optional":"Optional",
+  "assess.eyebrow":"Step one","assess.title":"What would you like to assess?","assess.sub":"Choose one, and we'll walk you through a short, private questionnaire.",
+  "assess.pcodTitle":"PCOD Risk Assessment","assess.pcodDesc":"Polycystic Ovarian Disease — cycle, weight and lifestyle related symptoms.",
+  "assess.pcosTitle":"PCOS Risk Assessment","assess.pcosDesc":"Polycystic Ovary Syndrome — hormonal, skin and fertility related symptoms.",
+  "form.step1.title":"Basic Information","form.step1.desc":"This helps us personalise your risk report.",
+  "form.name":"Name","form.age":"Age","form.height":"Height (cm)","form.weight":"Weight (kg)",
+  "form.step2.title":"Symptom Checklist","form.step2.desc":"Select everything that applies to you over the last 3–6 months.",
+  "form.step3.title":"Additional Information","form.step3.desc":"Anything else you'd like the doctor or report to know? (optional)",
+  "form.notesPlaceholder":"E.g. family history, current medication, recent changes...",
+  "form.next":"Next","form.back":"Back","form.submit":"Generate My Report","form.loading":"Analysing your responses...",
+  "report.eyebrow":"Your report","report.title":"Your Risk Report","report.riskScore":"Risk Score",
+  "report.doctorRecTitle":"Recommended Consultation","report.consultBtn":"Consult a Doctor",
+  "report.insightsTitle":"Health Insights","report.dietTitle":"Diet Plan","report.exerciseTitle":"Exercise Plan",
+  "report.lifestyleTitle":"Lifestyle Guidance",
+  "report.disclaimer":"This report is an educational self-screening tool, not a medical diagnosis. Please consult a certified doctor for confirmation and treatment.",
+  "doctors.eyebrow":"Consult","doctors.title":"Doctor Consultation","doctors.sub":"Filter by the language you're most comfortable speaking in.",
+  "filter.all":"All Doctors","filter.tamil":"Tamil Speaking","filter.english":"English Speaking","filter.bilingual":"Bilingual",
+  "doctor.book":"Book Appointment","doctor.experience":"Experience","doctor.fee":"Fee",
+  "tips.eyebrow":"Everyday care","tips.title":"Health Tips",
+  "faq.eyebrow":"Good to know","faq.title":"Frequently Asked Questions",
+  "footer.tagline":"A bilingual wellness space for PCOD/PCOS awareness, built with Tamil Nadu women in mind.",
+  "footer.disclaimerShort":"Educational tool only. Not a substitute for professional medical advice.",
+  "footer.copyright":"© 2026 Poo Care. All rights reserved.",
+  "modal.bookTitle":"Book Appointment","modal.bookSub":"Confirm your slot with","modal.date":"Preferred Date","modal.time":"Preferred Slot",
+  "modal.reason":"Reason for visit","modal.proceedPay":"Proceed to Payment","modal.payTitle":"Proceed to Payment","modal.paySub":"Consultation fee",
+  "modal.payDemo":"This is a demo checkout — no real payment gateway is connected, so no money will be charged. Connect a licensed provider like Razorpay or Stripe to accept real payments.",
+  "modal.payNow":"Pay & Confirm","modal.confirmTitle":"Appointment Confirmed","modal.confirmSub":"A confirmation has been sent to your registered contact.",
+  "modal.close":"Close","modal.cancel":"Cancel",
+  "toast.saved":"Saved successfully"
+},
+ta: {
+  "nav.assess":"மதிப்பீடு","nav.doctors":"மருத்துவர்கள்","nav.tips":"ஆரோக்கிய குறிப்புகள்","nav.faq":"கேள்விகள்","nav.cta":"மதிப்பீட்டைத் தொடங்கு",
+  "hero.eyebrow":"தனிப்பட்டது · இருமொழி · மருத்துவர் ஆதரவு",
+  "hero.title":"உங்கள் <em>PCOD / PCOS</em> ஆபத்தை உங்கள் மொழியில் புரிந்துகொள்ளுங்கள்",
+  "hero.lede":"உங்கள் மாதவிடாய், தோல் மற்றும் வாழ்க்கை முறை பற்றிய சில கேள்விகளுக்கு பதிலளிக்கவும். எளிதில் புரியும் ஆபத்து அறிக்கை, உணவு & உடற்பயிற்சி திட்டம், மற்றும் உங்கள் மொழி பேசும் மருத்துவர்களை — தமிழ் அல்லது ஆங்கிலத்தில் பெறுங்கள்.",
+  "hero.ctaPrimary":"இலவச மதிப்பீட்டைத் தொடங்கு","hero.ctaSecondary":"மருத்துவரைக் கண்டறியவும்",
+  "hero.stat1":"கண்காணிக்கப்படும் அறிகுறிகள்","hero.stat2":"முழுமையான மொழிகள்","hero.stat3":"முடிக்க ஆகும் நேரம்",
+  "hero.card.symptoms":"அறிகுறி சோதனை","hero.card.done":"முடிந்தது","hero.card.report":"AI ஆபத்து அறிக்கை","hero.card.instant":"உடனடி",
+  "hero.card.diet":"உணவு & உடற்பயிற்சி திட்டம்","hero.card.included":"சேர்க்கப்பட்டுள்ளது","hero.card.doctor":"மருத்துவ ஆலோசனை","hero.card.optional":"விருப்பத்தேர்வு",
+  "assess.eyebrow":"படி ஒன்று","assess.title":"நீங்கள் எதை மதிப்பீடு செய்ய விரும்புகிறீர்கள்?","assess.sub":"ஒன்றைத் தேர்ந்தெடுக்கவும், நாங்கள் ஒரு குறுகிய, தனிப்பட்ட கேள்வித்தாளின் மூலம் உங்களை வழிநடத்துவோம்.",
+  "assess.pcodTitle":"PCOD ஆபத்து மதிப்பீடு","assess.pcodDesc":"பாலிசிஸ்டிக் ஓவேரியன் நோய் — மாதவிடாய், எடை மற்றும் வாழ்க்கை முறை தொடர்பான அறிகுறிகள்.",
+  "assess.pcosTitle":"PCOS ஆபத்து மதிப்பீடு","assess.pcosDesc":"பாலிசிஸ்டிக் ஓவரி சிண்ட்ரோம் — ஹார்மோன், தோல் மற்றும் கருவுறுதல் தொடர்பான அறிகுறிகள்.",
+  "form.step1.title":"அடிப்படை தகவல்","form.step1.desc":"இது உங்கள் ஆபத்து அறிக்கையை தனிப்பயனாக்க உதவும்.",
+  "form.name":"பெயர்","form.age":"வயது","form.height":"உயரம் (செ.மீ)","form.weight":"எடை (கி.கி)",
+  "form.step2.title":"அறிகுறி பட்டியல்","form.step2.desc":"கடந்த 3–6 மாதங்களில் உங்களுக்குப் பொருந்தும் அனைத்தையும் தேர்ந்தெடுக்கவும்.",
+  "form.step3.title":"கூடுதல் தகவல்கள்","form.step3.desc":"மருத்துவர் அல்லது அறிக்கை அறிந்துகொள்ள வேண்டிய வேறு ஏதேனும் உள்ளதா? (விருப்பத்தேர்வு)",
+  "form.notesPlaceholder":"எ.கா. குடும்ப வரலாறு, தற்போதைய மருந்துகள், சமீபத்திய மாற்றங்கள்...",
+  "form.next":"அடுத்து","form.back":"பின்செல்","form.submit":"என் அறிக்கையை உருவாக்கு","form.loading":"உங்கள் பதில்கள் பகுப்பாய்வு செய்யப்படுகின்றன...",
+  "report.eyebrow":"உங்கள் அறிக்கை","report.title":"உங்கள் ஆபத்து அறிக்கை","report.riskScore":"ஆபத்து மதிப்பெண்",
+  "report.doctorRecTitle":"பரிந்துரைக்கப்பட்ட ஆலோசனை","report.consultBtn":"மருத்துவரை அணுகவும்",
+  "report.insightsTitle":"ஆரோக்கிய நுண்ணறிவு","report.dietTitle":"உணவு திட்டம்","report.exerciseTitle":"உடற்பயிற்சி திட்டம்",
+  "report.lifestyleTitle":"வாழ்க்கை முறை வழிகாட்டுதல்",
+  "report.disclaimer":"இந்த அறிக்கை ஒரு கல்வி நோக்கிலான தன்-சோதனை கருவி மட்டுமே, இது மருத்துவ நோயறிதல் அல்ல. உறுதிப்படுத்தலுக்கும் சிகிச்சைக்கும் ஒரு சான்றளிக்கப்பட்ட மருத்துவரை அணுகவும்.",
+  "doctors.eyebrow":"ஆலோசனை","doctors.title":"மருத்துவ ஆலோசனை","doctors.sub":"நீங்கள் வசதியாக பேசும் மொழியின் அடிப்படையில் வடிகட்டவும்.",
+  "filter.all":"அனைத்து மருத்துவர்கள்","filter.tamil":"தமிழ் பேசுபவர்கள்","filter.english":"ஆங்கிலம் பேசுபவர்கள்","filter.bilingual":"இருமொழி",
+  "doctor.book":"சந்திப்பு பதிவு செய்யவும்","doctor.experience":"அனுபவம்","doctor.fee":"கட்டணம்",
+  "tips.eyebrow":"அன்றாட பராமரிப்பு","tips.title":"ஆரோக்கிய குறிப்புகள்",
+  "faq.eyebrow":"தெரிந்து கொள்ள வேண்டியவை","faq.title":"அடிக்கடி கேட்கப்படும் கேள்விகள்",
+  "footer.tagline":"தமிழ்நாடு பெண்களை மனதில் கொண்டு உருவாக்கப்பட்ட PCOD/PCOS விழிப்புணர்வுக்கான இருமொழி ஆரோக்கிய தளம்.",
+  "footer.disclaimerShort":"கல்வி நோக்கிலான கருவி மட்டுமே. தொழில்முறை மருத்துவ ஆலோசனைக்கு மாற்றாக இல்லை.",
+  "footer.copyright":"© 2026 Poo Care. அனைத்து உரிமைகளும் பாதுகாக்கப்பட்டவை.",
+  "modal.bookTitle":"சந்திப்பு பதிவு செய்யவும்","modal.bookSub":"இதனுடன் உங்கள் நேரத்தை உறுதிசெய்யவும்","modal.date":"விருப்பமான தேதி","modal.time":"விருப்பமான நேரம்",
+  "modal.reason":"வருகைக்கான காரணம்","modal.proceedPay":"பணம் செலுத்த தொடரவும்","modal.payTitle":"பணம் செலுத்த தொடரவும்","modal.paySub":"ஆலோசனை கட்டணம்",
+  "modal.payDemo":"இது ஒரு டெமோ செக்அவுட் — உண்மையான கட்டண நுழைவாயில் இணைக்கப்படவில்லை, எனவே பணம் எதுவும் வசூலிக்கப்படாது. உண்மையான பணம் ஏற்க Razorpay அல்லது Stripe போன்ற உரிமம் பெற்ற வழங்குநரை இணைக்கவும்.",
+  "modal.payNow":"பணம் செலுத்தி உறுதிசெய்யவும்","modal.confirmTitle":"சந்திப்பு உறுதி செய்யப்பட்டது","modal.confirmSub":"உங்கள் பதிவு செய்யப்பட்ட தொடர்புக்கு உறுதிப்படுத்தல் அனுப்பப்பட்டது.",
+  "modal.close":"மூடு","modal.cancel":"ரத்து செய்",
+  "toast.saved":"வெற்றிகரமாக சேமிக்கப்பட்டது"
+}
+};
+
+const symptomList = [
+  {key:"irregularPeriods", en:"Irregular Periods", ta:"ஒழுங்கற்ற மாதவிடாய்"},
+  {key:"delayedPeriods", en:"Delayed Periods", ta:"தாமதமான மாதவிடாய்"},
+  {key:"missedPeriods", en:"Missed Periods", ta:"மாதவிடாய் தவறுதல்"},
+  {key:"weightGain", en:"Weight Gain", ta:"உடல் எடை அதிகரித்தல்"},
+  {key:"difficultyLosingWeight", en:"Difficulty Losing Weight", ta:"எடை குறைப்பதில் சிரமம்"},
+  {key:"hairFall", en:"Hair Fall", ta:"முடி உதிர்தல்"},
+  {key:"hairThinning", en:"Hair Thinning", ta:"முடி அடர்த்தி குறைதல்"},
+  {key:"acne", en:"Acne", ta:"முகப்பரு"},
+  {key:"oilySkin", en:"Oily Skin", ta:"எண்ணெய் பசை தோல்"},
+  {key:"facialHair", en:"Facial Hair Growth", ta:"முகத்தில் அதிக முடி வளர்ச்சி"},
+  {key:"darkNeck", en:"Dark Neck Pigmentation", ta:"கழுத்தில் கருமை"},
+  {key:"darkUnderarms", en:"Dark Underarms", ta:"கைக்குழியில் கருமை"},
+  {key:"fatigue", en:"Fatigue", ta:"அதிக சோர்வு"},
+  {key:"moodSwings", en:"Mood Swings", ta:"மனநிலை மாற்றங்கள்"},
+  {key:"sleepIssues", en:"Sleep Issues", ta:"தூக்கப் பிரச்சினைகள்"},
+  {key:"bloating", en:"Bloating", ta:"வயிற்று உப்புசம்"},
+  {key:"anxiety", en:"Anxiety", ta:"பதட்டம்"},
+  {key:"depressionSymptoms", en:"Depression Symptoms", ta:"மனச்சோர்வு அறிகுறிகள்"},
+  {key:"pelvicDiscomfort", en:"Pelvic Discomfort", ta:"இடுப்புப் பகுதியில் அசௌகரியம்"},
+  {key:"fertilityConcerns", en:"Fertility Concerns", ta:"கர்ப்பம் தரிப்பதில் சிக்கல்கள்"}
+];
+
+const doctors = [
+  {name:"Dr. Lakshmi Narayanan", spec_en:"Gynecologist", spec_ta:"மகளிர் மருத்துவர்", langs:["tamil","bilingual"], exp:12, fee:"₹500"},
+  {name:"Dr. Priya Ramesh", spec_en:"Endocrinologist", spec_ta:"ஹார்மோன் மருத்துவர்", langs:["bilingual"], exp:9, fee:"₹700"},
+  {name:"Dr. Anjali Fernandes", spec_en:"Gynecologist", spec_ta:"மகளிர் மருத்துவர்", langs:["english"], exp:15, fee:"₹800"},
+  {name:"Dr. Kavitha Subramaniam", spec_en:"Nutritionist", spec_ta:"ஊட்டச்சத்து நிபுணர்", langs:["tamil","bilingual"], exp:7, fee:"₹400"},
+  {name:"Dr. Meena Krishnan", spec_en:"Gynecologist", spec_ta:"மகளிர் மருத்துவர்", langs:["tamil"], exp:20, fee:"₹600"},
+  {name:"Dr. Sarah Thomas", spec_en:"Endocrinologist", spec_ta:"ஹார்மோன் மருத்துவர்", langs:["english","bilingual"], exp:11, fee:"₹750"}
+];
+
+const tipsData = {
+  en:[
+    {t:"Move daily", d:"30 minutes of brisk walking or yoga helps regulate insulin and hormone levels."},
+    {t:"Balance your plate", d:"Favour fibre, protein and healthy fats over refined carbs and sugar."},
+    {t:"Prioritise sleep", d:"7–8 hours of consistent sleep supports hormonal balance."},
+    {t:"Manage stress", d:"Chronic stress raises cortisol, which can worsen PCOD/PCOS symptoms."},
+    {t:"Track your cycle", d:"Logging your periods helps you and your doctor spot patterns early."},
+    {t:"Regular check-ups", d:"An annual hormone panel and ultrasound can catch changes early."}
+  ],
+  ta:[
+    {t:"தினமும் இயங்குங்கள்", d:"30 நிமிட நடைபயிற்சி அல்லது யோகா இன்சுலின் மற்றும் ஹார்மோன் அளவை சீராக்க உதவும்."},
+    {t:"உணவை சமநிலைப்படுத்துங்கள்", d:"சுத்திகரிக்கப்பட்ட கார்போஹைட்ரேட் மற்றும் சர்க்கரையை விட நார்ச்சத்து, புரதம் மற்றும் ஆரோக்கியமான கொழுப்புகளை விரும்புங்கள்."},
+    {t:"தூக்கத்திற்கு முன்னுரிமை கொடுங்கள்", d:"7–8 மணி நேர தொடர்ச்சியான தூக்கம் ஹார்மோன் சமநிலையை ஆதரிக்கிறது."},
+    {t:"மன அழுத்தத்தை நிர்வகிக்கவும்", d:"நீடித்த மன அழுத்தம் கார்டிசோலை அதிகரிக்கிறது, இது PCOD/PCOS அறிகுறிகளை மோசமாக்கும்."},
+    {t:"உங்கள் சுழற்சியை கண்காணிக்கவும்", d:"உங்கள் மாதவிடாயை பதிவு செய்வது, முறைகளை முன்கூட்டியே கண்டறிய உதவுகிறது."},
+    {t:"தொடர்ந்த மருத்துவ பரிசோதனை", d:"ஆண்டு ஹார்மோன் பரிசோதனை மற்றும் அல்ட்ராசவுண்ட் மாற்றங்களை முன்கூட்டியே கண்டறியலாம்."}
+  ]
+};
+
+const faqData = {
+  en:[
+    {q:"Is this a medical diagnosis?", a:"No. This is an educational self-screening tool to help you understand your risk level. Only a certified doctor can diagnose PCOD or PCOS, usually with blood tests and an ultrasound."},
+    {q:"Is my data private?", a:"Your answers are used only to generate your personal report in this session and are not shared with third parties."},
+    {q:"What's the difference between PCOD and PCOS?", a:"PCOD is a common condition where ovaries release immature eggs, often linked to lifestyle. PCOS is a more complex hormonal disorder that can affect fertility and metabolism."},
+    {q:"Can diet and exercise really help?", a:"Yes — for many women, consistent lifestyle changes meaningfully reduce symptoms alongside any medical treatment a doctor recommends."}
+  ],
+  ta:[
+    {q:"இது ஒரு மருத்துவ நோயறிதலா?", a:"இல்லை. இது உங்கள் ஆபத்து நிலையை புரிந்துகொள்ள உதவும் ஒரு கல்வி நோக்கிலான தன்-சோதனை கருவி. இரத்த பரிசோதனைகள் மற்றும் அல்ட்ராசவுண்ட் மூலம் ஒரு சான்றளிக்கப்பட்ட மருத்துவர் மட்டுமே PCOD அல்லது PCOS ஐ கண்டறிய முடியும்."},
+    {q:"என் தரவு தனிப்பட்டதா?", a:"உங்கள் பதில்கள் இந்த அமர்வில் உங்கள் தனிப்பட்ட அறிக்கையை உருவாக்க மட்டுமே பயன்படுத்தப்படுகின்றன, மூன்றாம் தரப்பினருடன் பகிரப்படுவதில்லை."},
+    {q:"PCOD மற்றும் PCOS இடையே உள்ள வேறுபாடு என்ன?", a:"PCOD என்பது ஓவரிகள் முதிர்ச்சியடையாத முட்டைகளை வெளியிடும் ஒரு பொதுவான நிலை, பெரும்பாலும் வாழ்க்கை முறையுடன் தொடர்புடையது. PCOS என்பது கருவுறுதல் மற்றும் வளர்சிதை மாற்றத்தை பாதிக்கக்கூடிய மிகவும் சிக்கலான ஹார்மோன் கோளாறு."},
+    {q:"உணவு மற்றும் உடற்பயிற்சி உண்மையில் உதவுமா?", a:"ஆம் — பல பெண்களுக்கு, தொடர்ச்சியான வாழ்க்கை முறை மாற்றங்கள் மருத்துவர் பரிந்துரைக்கும் எந்த சிகிச்சையுடனும் சேர்ந்து அறிகுறிகளை கணிசமாகக் குறைக்கின்றன."}
+  ]
+};
+
+/* ============================================================
+   STATE
+   ============================================================ */
+let currentLang = "en";
+let currentPath = "PCOD";
+let currentStep = 1;
+let selectedSymptoms = [];
+let lastReport = null;
+
+/* ============================================================
+   HELPERS
+   ============================================================ */
+function scrollToId(id){ document.getElementById(id).scrollIntoView({behavior:"smooth"}); }
+
+function applyTranslations(){
+  document.querySelectorAll("[data-t]").forEach(el=>{
+    const key = el.getAttribute("data-t");
+    if(t[currentLang][key]) el.innerHTML = t[currentLang][key];
+  });
+  document.querySelectorAll("[data-t-placeholder]").forEach(el=>{
+    const key = el.getAttribute("data-t-placeholder");
+    if(t[currentLang][key]) el.placeholder = t[currentLang][key];
+  });
+  document.body.classList.toggle("lang-ta", currentLang==="ta");
+  document.getElementById("switch-en").classList.toggle("active", currentLang==="en");
+  document.getElementById("switch-ta").classList.toggle("active", currentLang==="ta");
+  document.documentElement.lang = currentLang;
+  renderSymptoms();
+  renderDoctors(currentDoctorFilter);
+  renderTips();
+  renderFaq();
+}
+
+function setLanguage(lang){
+  currentLang = lang;
+  document.getElementById("lang-overlay").style.display = "none";
+  applyTranslations();
+}
+
+document.querySelectorAll(".lang-btn, #switch-en, #switch-ta").forEach(btn=>{
+  btn.addEventListener("click", ()=> setLanguage(btn.getAttribute("data-lang")));
+});
+
+/* ============================================================
+   ASSESSMENT FLOW
+   ============================================================ */
+function choosePath(path){
+  currentPath = path;
+  document.getElementById("path-select").classList.add("hidden");
+  document.getElementById("assess-form").classList.remove("hidden");
+  goStep(1);
+}
+
+function goStep(step){
+  currentStep = step;
+  [1,2,3].forEach(i=>{
+    document.getElementById("form-step-"+i).classList.toggle("hidden", i!==step);
+    const dot = document.getElementById("dot-"+i);
+    dot.classList.remove("done","current");
+    if(i<step) dot.classList.add("done");
+    if(i===step) dot.classList.add("current");
+  });
+}
+
+function renderSymptoms(){
+  const grid = document.getElementById("symptom-grid");
+  grid.innerHTML = "";
+  symptomList.forEach(s=>{
+    const checked = selectedSymptoms.includes(s.key);
+    const label = document.createElement("label");
+    label.className = "symptom-chip" + (checked ? " checked" : "");
+    label.innerHTML = `<input type="checkbox" ${checked?"checked":""} data-key="${s.key}"> <span>${s[currentLang]}</span>`;
+    label.querySelector("input").addEventListener("change", (e)=>{
+      if(e.target.checked){ selectedSymptoms.push(s.key); } else { selectedSymptoms = selectedSymptoms.filter(k=>k!==s.key); }
+      renderSymptoms();
+    });
+    grid.appendChild(label);
+  });
+}
+
+async function submitAssessment(){
+  const name = document.getElementById("f-name").value || (currentLang==="ta" ? "பயனர்" : "User");
+  const age = document.getElementById("f-age").value || "—";
+  const height = document.getElementById("f-height").value || "—";
+  const weight = document.getElementById("f-weight").value || "—";
+  const notes = document.getElementById("f-notes").value || "";
+
+  [1,2,3].forEach(i=> document.getElementById("form-step-"+i).classList.add("hidden"));
+  document.getElementById("form-loading").classList.remove("hidden");
+
+  const symptomLabels = selectedSymptoms.map(k => symptomList.find(s=>s.key===k)[currentLang]);
+  const langName = currentLang === "ta" ? "Tamil" : "English";
+
+  const prompt = `You are a careful, warm women's-health educational assistant. A user completed a self-screening questionnaire for ${currentPath}.
+Profile: age ${age}, height ${height} cm, weight ${weight} kg.
+Reported symptoms: ${symptomLabels.length ? symptomLabels.join(", ") : "none reported"}.
+Additional notes from user: ${notes || "none"}.
+
+Respond ONLY with a valid JSON object (no markdown fences, no preamble) in ${langName}, with this exact structure:
+{
+  "riskScore": <integer 0-100, a general educational indicator only, not a diagnosis>,
+  "riskCategory": "<Low|Moderate|High, translated appropriately if language is Tamil>",
+  "insights": ["<3-5 short insight sentences about what the symptom pattern may suggest, phrased cautiously, non-diagnostic>"],
+  "diet": {"breakfast": "<short suggestion>", "lunch": "<short suggestion>", "dinner": "<short suggestion>", "snacks": "<short suggestion>"},
+  "exercise": ["<3-4 short exercise suggestions suited to the risk category>"],
+  "lifestyle": ["<3-4 short lifestyle guidance points, e.g. sleep, stress, screening frequency>"],
+  "doctorRecommendation": "<1-2 sentences recommending the type of specialist to see and urgency, always encouraging professional consultation, non-alarming tone>"
+}
+All text values must be written naturally and fluently in ${langName}. Do not include any medical diagnosis claims — frame everything as an educational indicator that should be confirmed by a certified doctor.`;
+
+  try{
+    const response = await fetch("https://api.anthropic.com/v1/messages", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        model: "claude-sonnet-4-6",
+        max_tokens: 1000,
+        messages: [{ role: "user", content: prompt }]
+      })
+    });
+    const data = await response.json();
+    const rawText = (data.content || []).map(b => b.text || "").join("\n").trim();
+    const clean = rawText.replace(/```json|```/g, "").trim();
+    const report = JSON.parse(clean);
+    lastReport = report;
+    renderReport(report);
+  }catch(err){
+    console.error("AI report error:", err);
+    renderReport(fallbackReport());
+  }finally{
+    document.getElementById("form-loading").classList.add("hidden");
+    document.getElementById("assess-form").classList.add("hidden");
+    document.getElementById("report-wrap").classList.remove("hidden");
+    scrollToId("report-wrap");
+  }
+}
+
+function fallbackReport(){
+  const isTa = currentLang === "ta";
+  const score = Math.min(90, 20 + selectedSymptoms.length * 6);
+  return {
+    riskScore: score,
+    riskCategory: score < 35 ? (isTa?"குறைவு":"Low") : score < 65 ? (isTa?"நடுத்தரம்":"Moderate") : (isTa?"அதிகம்":"High"),
+    insights: isTa ? ["உங்கள் பதில்களின் அடிப்படையில் இது ஒரு பொதுவான குறிகாட்டி.", "மேலும் விவரங்களுக்கு மருத்துவரை அணுகவும்."] :
+                     ["This is a general indicator based on your responses.", "Consult a doctor for a detailed evaluation."],
+    diet: isTa ? {breakfast:"பழங்களுடன் ஓட்ஸ்", lunch:"காய்கறிகளுடன் பிரவுன் அரிசி", dinner:"சாலட்டுடன் கிரில் செய்யப்பட்ட சிக்கன்", snacks:"கொட்டைகள் மற்றும் பழங்கள்"} :
+                     {breakfast:"Oats with fruits", lunch:"Brown rice with vegetables", dinner:"Grilled chicken with salad", snacks:"Nuts and fresh fruit"},
+    exercise: isTa ? ["தினமும் 30 நிமிட நடைபயிற்சி","வாரம் 2-3 முறை யோகா","எடை பயிற்சி"] : ["30 minutes of daily walking","Yoga 2-3 times a week","Light strength training"],
+    lifestyle: isTa ? ["7-8 மணி நேர தூக்கம்","மன அழுத்த மேலாண்மை","வழக்கமான பரிசோதனைகள்"] : ["7-8 hours of sleep","Stress management","Regular check-ups"],
+    doctorRecommendation: isTa ? "ஒரு மகளிர் மருத்துவர் அல்லது ஹார்மோன் நிபுணரை அணுகுவது நல்லது." : "It would help to consult a gynecologist or endocrinologist for a proper evaluation."
+  };
+}
+
+function renderReport(report){
+  const isTa = currentLang === "ta";
+  const score = Math.max(0, Math.min(100, parseInt(report.riskScore) || 0));
+  document.getElementById("gauge-number").textContent = score;
+  const circumference = 2 * Math.PI * 52;
+  const arc = document.getElementById("gauge-arc");
+  arc.setAttribute("stroke-dasharray", circumference);
+  arc.setAttribute("stroke-dashoffset", circumference - (score/100)*circumference);
+
+  const badge = document.getElementById("risk-badge");
+  badge.textContent = report.riskCategory || "--";
+  badge.className = "risk-badge " + (score < 35 ? "risk-low" : score < 65 ? "risk-moderate" : "risk-high");
+
+  const insightsEl = document.getElementById("insights-list");
+  insightsEl.innerHTML = (report.insights||[]).map(i=>`<div class="insight-item">${i}</div>`).join("");
+
+  const dietEl = document.getElementById("diet-list");
+  const mealLabels = isTa ? {breakfast:"காலை உணவு",lunch:"மதிய உணவு",dinner:"இரவு உணவு",snacks:"சிற்றுண்டி"} : {breakfast:"Breakfast",lunch:"Lunch",dinner:"Dinner",snacks:"Snacks"};
+  const diet = report.diet || {};
+  dietEl.innerHTML = Object.keys(mealLabels).map(k=>`<div class="plan-row"><span class="meal">${mealLabels[k]}</span><span>${diet[k]||"—"}</span></div>`).join("");
+
+  document.getElementById("exercise-list").innerHTML = (report.exercise||[]).map(i=>`<div class="insight-item">${i}</div>`).join("");
+  document.getElementById("lifestyle-list").innerHTML = (report.lifestyle||[]).map(i=>`<div class="insight-item">${i}</div>`).join("");
+  document.getElementById("doctor-rec-text").textContent = report.doctorRecommendation || "";
+}
+
+/* ============================================================
+   DOCTORS
+   ============================================================ */
+let currentDoctorFilter = "all";
+function renderDoctors(filter){
+  currentDoctorFilter = filter || "all";
+  const filters = document.getElementById("doctor-filters");
+  const filterDefs = [["all","filter.all"],["tamil","filter.tamil"],["english","filter.english"],["bilingual","filter.bilingual"]];
+  filters.innerHTML = filterDefs.map(([key,label])=>
+    `<button class="filter-btn ${currentDoctorFilter===key?'active':''}" onclick="renderDoctors('${key}')">${t[currentLang][label]}</button>`
+  ).join("");
+
+  const grid = document.getElementById("doctor-grid");
+  const list = doctors.filter(d => currentDoctorFilter==="all" || d.langs.includes(currentDoctorFilter));
+  const langBadgeLabel = {tamil:t[currentLang]["filter.tamil"], english:t[currentLang]["filter.english"], bilingual:t[currentLang]["filter.bilingual"]};
+  grid.innerHTML = list.map((d, idx)=>{
+    const initials = d.name.split(" ").slice(-1)[0][0] + (d.name.split(" ")[1]?.[0]||"");
+    return `<div class="doctor-card">
+      <div class="doc-top">
+        <div class="doc-avatar">${initials}</div>
+        <div><h4>${d.name}</h4><p>${currentLang==='ta'?d.spec_ta:d.spec_en}</p></div>
+      </div>
+      <div class="doc-badges">${d.langs.map(l=>`<span class="badge">${langBadgeLabel[l]}</span>`).join("")}</div>
+      <div class="doc-meta"><span>${t[currentLang]["doctor.experience"]}: <strong>${d.exp} yrs</strong></span><span>${t[currentLang]["doctor.fee"]}: <strong>${d.fee}</strong></span></div>
+      <button class="btn btn-primary" style="width:100%;" onclick="openBooking(${doctors.indexOf(d)})">${t[currentLang]["doctor.book"]}</button>
+    </div>`;
+  }).join("");
+}
+
+/* ============================================================
+   BOOKING MODAL (front-end demo — no live payment gateway)
+   ============================================================ */
+function openBooking(index){
+  const d = doctors[index];
+  const root = document.getElementById("modal-root");
+  root.innerHTML = `
+  <div class="modal-backdrop" onclick="if(event.target===this) closeModal()">
+    <div class="modal">
+      <button class="modal-close" onclick="closeModal()">✕</button>
+      <h3>${t[currentLang]["modal.bookTitle"]}</h3>
+      <p class="sub">${t[currentLang]["modal.bookSub"]} ${d.name}</p>
+      <label class="field-label">${t[currentLang]["modal.date"]}</label>
+      <input type="text" id="book-date" placeholder="DD/MM/YYYY" style="margin-bottom:14px;">
+      <label class="field-label">${t[currentLang]["modal.time"]}</label>
+      <input type="text" id="book-time" placeholder="10:00 AM" style="margin-bottom:14px;">
+      <label class="field-label">${t[currentLang]["modal.reason"]}</label>
+      <textarea id="book-reason" style="min-height:70px;"></textarea>
+      <button class="btn btn-primary" style="width:100%;margin-top:18px;" onclick="openPayment(${index})">${t[currentLang]["modal.proceedPay"]}</button>
+    </div>
+  </div>`;
+}
+
+function openPayment(index){
+  const d = doctors[index];
+  const root = document.getElementById("modal-root");
+  root.innerHTML = `
+  <div class="modal-backdrop" onclick="if(event.target===this) closeModal()">
+    <div class="modal">
+      <button class="modal-close" onclick="closeModal()">✕</button>
+      <h3>${t[currentLang]["modal.payTitle"]}</h3>
+      <p class="sub">${t[currentLang]["modal.paySub"]}: <strong>${d.fee}</strong> — ${d.name}</p>
+      <label class="field-label">Card Number</label>
+      <input type="text" placeholder="4242 4242 4242 4242" style="margin-bottom:14px;">
+      <div class="field-row">
+        <input type="text" placeholder="MM/YY">
+        <input type="text" placeholder="CVV">
+      </div>
+      <div class="pay-mock">${t[currentLang]["modal.payDemo"]}</div>
+      <button class="btn btn-primary" style="width:100%;margin-top:18px;" onclick="confirmBooking('${d.name.replace(/'/g,"")}')">${t[currentLang]["modal.payNow"]}</button>
+    </div>
+  </div>`;
+}
+
+function confirmBooking(doctorName){
+  const root = document.getElementById("modal-root");
+  root.innerHTML = `
+  <div class="modal-backdrop" onclick="if(event.target===this) closeModal()">
+    <div class="modal" style="text-align:center;">
+      <button class="modal-close" onclick="closeModal()">✕</button>
+      <svg class="confirm-icon" viewBox="0 0 48 48" fill="none"><circle cx="24" cy="24" r="22" fill="#E3F3EA"/><path d="M15 24l6 6 12-13" stroke="#1E7A46" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      <h3>${t[currentLang]["modal.confirmTitle"]}</h3>
+      <p class="sub">${t[currentLang]["modal.confirmSub"]}</p>
+      <button class="btn btn-ghost" style="width:100%;margin-top:10px;" onclick="closeModal()">${t[currentLang]["modal.close"]}</button>
+    </div>
+  </div>`;
+}
+
+function closeModal(){ document.getElementById("modal-root").innerHTML = ""; }
+
+/* ============================================================
+   TIPS & FAQ
+   ============================================================ */
+function renderTips(){
+  const grid = document.getElementById("tips-grid");
+  grid.innerHTML = tipsData[currentLang].map(tip=>`
+    <div class="doctor-card">
+      <h4 style="color:var(--teal-deep);font-size:16px;margin-bottom:8px;">${tip.t}</h4>
+      <p style="font-size:13.5px;color:var(--ink-soft);line-height:1.6;">${tip.d}</p>
+    </div>`).join("");
+}
+
+function renderFaq(){
+  const list = document.getElementById("faq-list");
+  list.innerHTML = faqData[currentLang].map((f,i)=>`
+    <div class="faq-item">
+      <button class="faq-q" onclick="toggleFaq(${i})">${f.q}<span id="faq-icon-${i}">+</span></button>
+      <div class="faq-a hidden" id="faq-a-${i}">${f.a}</div>
+    </div>`).join("");
+}
+function toggleFaq(i){
+  const el = document.getElementById("faq-a-"+i);
+  const icon = document.getElementById("faq-icon-"+i);
+  const open = !el.classList.contains("hidden");
+  el.classList.toggle("hidden");
+  icon.textContent = open ? "+" : "–";
+}
+
+/* ============================================================
+   INIT
+   ============================================================ */
+renderSymptoms();
+renderDoctors("all");
+renderTips();
+renderFaq();
+</script>
+</body>
+</html>
